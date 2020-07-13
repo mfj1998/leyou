@@ -61,6 +61,10 @@ public final class CookieUtils {
         return new CookieBuilder();
     }
 
+    public static void deleteCookie(String cookieName, String cookieDomain, HttpServletResponse response) {
+
+    }
+
     public static class CookieBuilder {
         private HttpServletRequest request;
         private HttpServletResponse response;

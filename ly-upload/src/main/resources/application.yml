@@ -1,0 +1,25 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: upload-service
+  servlet:
+    multipart:
+      max-file-size: 5MB  # 文件的最大上传
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true # 是否用ip显示
+    ip-address: 127.0.0.1
+
+ly:
+  oss:
+    accessKeyId: LTAI4Fjv1jh6bhjiNpqyKBT2
+    accessKeySecret: XhtG83jt1j90iYyKqGbIx7sRBur9wx #你的阿里云access key码
+    host: http://image.leyou.com                   # 访问oss的域名，很重要bucket + endpoint;这里配置的为nginx反向代理的域名
+    endpoint: oss-cn-shanghai.aliyuncs.com         # 你的服务的端点，不一定跟我一样
+    dir: ""                                        # 保存到bucket的某个子目录
+    expireTime: 20                                 # 过期时间，单位是S
+    maxFileSize: 5242880                           #文件大小限制，这里是5M

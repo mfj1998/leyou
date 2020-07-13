@@ -1,8 +1,7 @@
-/*
 package com.leyou.common.utils;
 
 import com.leyou.common.enums.ExceptionEnum;
-import com.leyou.common.exceptions.LyException;
+import com.leyou.common.exception.LyException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 
@@ -43,4 +42,3 @@ public class BeanHelper {
         }
     }
 }
-*/

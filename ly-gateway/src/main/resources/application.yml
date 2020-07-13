@@ -7,10 +7,22 @@ eureka:
   client:
     service-url:
       defaultZone: http://127.0.0.1:10086/eureka
+    registry-fetch-interval-seconds: 5    # 设置为5s的时间进行拉取，这里的路由需要消费服务
 zuul:
   prefix: /api
   routes:
-    item-service: /item/**    # 映射到这个路径上
+    item-service: /item/**        # item-service服务映射到这个路径上
+    upload-service: /upload/**    # upload-service服务映射路径
+    search-service: /search/**    # search-service服务映射路径
+    user-service: /user/**        # 用户注册、登录
+    auth-service: /auth/**        # jwt的服务
+    cart-service: /cart/**        # 购物车的服务
+    order-service:
+      path: /order/**
+      serviceId: order-service
+      strip-prefix: false         # 设置为false，为不消费路径
+  sensitive-headers:              # 因为zuul网关中属性默认拦截cookie,我们空值覆盖属性值
+
 hystrix:
   command:
     default:
@@ -24,3 +36,40 @@ ribbon:
   MaxAutoRetries: 0  # 当前服务重试次数
   MaxAutoRetriesNextServer: 1 # 切换服务重试次数
   OkToRetryOnAllOperations: false # 是否对所有的请求方式都重试，只对get请求重试
+
+
+ly:
+  cors:
+    allowedOrigins:
+      - http://manage.leyou.com
+      - http://www.leyou.com
+    allowCredentials: true
+    allowedMethods:
+      - GET
+      - PUT
+      - POST
+      - DELETE
+      - GEAD
+      - PATH
+      - OPTIONS
+    allowedHeaders:
+      - "*"
+    filterPath: "/**"
+    maxAge: 360000    # 跨域检测的时间,单位为s,时间到了会无法进行跨域请求
+  filter:
+    allowPaths:       # 要放行的路径
+      - /api/auth/login
+      - /api/search
+      - /api/user/register
+      - /api/user/check
+      - /api/user/code
+      - /api/item
+  jwt:
+    pubKeyPath: D:\学习使我快乐\IO流文件\publicFile.pub  # 公钥地址
+    user:
+      cookieName: LY_TOKEN
+    app:
+      id: 7     # 服务的id
+      secret: ${spring.application.name}  # 服务的密码,默认是服务的名称
+      headerName: root
+

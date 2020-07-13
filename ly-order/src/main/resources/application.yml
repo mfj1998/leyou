@@ -1,0 +1,54 @@
+server:
+  port: 8090
+spring:
+  application:
+    name: order-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+    url: jdbc:mysql://127.0.0.1:3306/heima86?characterEncoding=utf-8
+  jackson:
+    default-property-inclusion: non_null
+  rabbitmq:
+    host: 192.168.11.129
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true                 # 开启重启的机制
+        initial-interval: 100000ms    # 第一次的超时重试的间隔
+        max-interval: 80000ms         # 最长重试间隔
+        multiplier: 2                 # 下次重试的次数为上次的几倍
+    publisher-confirms: true          # 生产者确认机制,没有确认则重试
+  redis:
+    host: 192.168.11.129
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+mybatis:
+  type-aliases-package: com.leyou.order.entity
+  configuration:
+    map-underscore-to-camel-case: true
+ly:
+  worker:
+    workerId: 1
+    dataCenterId: 1
+  jwt:
+    pubKeyPath: D:\学习使我快乐\IO流文件\publicFile.pub  # 公钥地址
+    app:
+      id: 6
+      secret: ${spring.application.name}
+      headerName: root
+  pay:
+    wx:
+      appID: wx8397f8696b538317
+      mchID: 1473426802
+      key: T6m9iK73b0kn9g5v426MKfHQH7X8rKwb
+      notifyUrl: 127.0.0.1                    # 指定支付的域名,为外网的项目域名
+      tradeType: NATIVE                       # 支付的方式,选择Native商家支付

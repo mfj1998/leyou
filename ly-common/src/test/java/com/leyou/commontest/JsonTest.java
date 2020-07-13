@@ -1,6 +1,7 @@
 package com.leyou.commontest;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.leyou.common.utils.JsonUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

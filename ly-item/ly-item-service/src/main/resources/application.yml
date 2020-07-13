@@ -1,11 +1,27 @@
 server:
   port: 8081
+
 spring:
   application:
     name: item-service
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306:/leyou
+    url: jdbc:mysql:///heima86?characterEncoding=utf-8
+    password: root
+    username: root
+  rabbitmq:
+    host: 192.168.11.129
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+    template:
+      retry:
+        enabled: true                 # 开启重启的机制
+        initial-interval: 100000ms    # 第一次的超时重试的间隔
+        max-interval: 80000ms         # 最长重试间隔
+        multiplier: 2                 # 下次重试的次数为上次的几倍
+    publisher-confirms: true          # 生产者确认机制,没有确认则重试
+
 eureka:
   client:
     service-url:
@@ -15,3 +31,20 @@ eureka:
     ip-address: 127.0.0.1
     lease-renewal-interval-in-seconds: 5      # 每个多少秒心跳一次
     lease-expiration-duration-in-seconds: 15  # 心跳不响应的过期时间
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000 # 熔断超时时长：6000ms
+logging:
+  level:
+    com.leyou: debug
+    org.springframework: debug
+
+mybatis:
+  mapper-locations: classpath:/mapper/**.xml
+  type-aliases-package: com.leyou.item.entity
+  configuration:
+    map-underscore-to-camel-case: true

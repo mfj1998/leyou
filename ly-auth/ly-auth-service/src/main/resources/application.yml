@@ -1,0 +1,50 @@
+server:
+  port: 8087
+spring:
+  application:
+    name: auth-service
+  redis:
+    host: 192.168.11.129
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/heima86?characterSet=utf-8
+    username: root
+    password: root
+mybatis:
+  type-aliases-package: com.leyou.auth.entity
+  mapper-locations: mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com.leyou: trace
+mapper:
+  wrap-keyword: "`{0}`"         # 属性名和数据库字段名相同时可以区分
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 15
+ly:
+  jwt:
+    pubKeyPath: D:\学习使我快乐\IO流文件\publicFile.pub  # 公钥地址
+    priKeyPath: D:\学习使我快乐\IO流文件\privateFile     # 私钥地址
+    user:
+      expire: 30                # 过期的时间,单位分钟
+      cookieName: LY_TOKEN      # cookie的命名
+      cookieDomain: leyou.com   # cookie的域
+      cookieMaxAge: 1800        # cookie过期时间
+      minRefreshInterval: 15    # 设置的最小的刷新时间
+    app:
+      expire: 1500              # app的token的过期时长设置，设置为25小时,24小时过期后发生意外可使用老的token
+      id: 10                    # auth服务的id
+      secret: ${spring.application.name} # auth服务的密钥，默认也是服务名称
+      headerName: root
+  encoder:
+    crypt:
+      secret: ${random.uuid}
+      strength: 10

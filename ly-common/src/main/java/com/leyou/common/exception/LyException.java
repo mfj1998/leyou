@@ -3,6 +3,9 @@ package com.leyou.common.exception;
 import com.leyou.common.enums.ExceptionEnum;
 import lombok.Getter;
 
+/**
+ * 自定义的异常
+ */
 @Getter
 public class LyException extends RuntimeException {
     private int status;

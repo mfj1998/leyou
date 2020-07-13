@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leyou.item.mapper.SkuMapper">
+
+    <update id="updateSkuBySpuId">
+        UPDATE tb_sku
+        <set>
+            <if test="enable != null">
+                enable=#{enable},
+            </if>
+            <if test="images != null">
+                images=#{images},
+            </if>
+            <if test="indexes != null">
+                indexes=#{indexes},
+            </if>
+            <if test="ownSpec != null">
+                own_spec=#{ownSpec},
+            </if>
+            <if test="price != null">
+                price=#{price},
+            </if>
+            <if test="stock != null">
+                stock=#{stock},
+            </if>
+            <if test="title != null">
+                title=#{title},
+            </if>
+            <if test="updateTime != null">
+                update_time=#{updateTime}
+            </if>
+        </set>
+        WHERE spu_id=#{spuId}
+    </update>
+
+    <update id="updateSkuStock">
+        UPDATE tb_sku
+        <set>
+            <if test="num != null">
+                stock = stock - #{num}
+            </if>
+        </set>
+        WHERE id = #{skuId}
+    </update>
+
+    <delete id="deleteBySpuId">
+        DELETE FROM tb_sku WHERE spu_id=#{sid}
+    </delete>
+
+</mapper>

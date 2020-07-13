@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.leyou.item.mapper.BrandMapper">
+
+    <insert id="insertBrandIdAndCategoryId">
+        INSERT INTO tb_category_brand(brand_id,category_id) VALUE
+        <foreach collection="cids" item="cid" separator=",">
+            (#{id},#{cid})
+        </foreach>
+    </insert>
+
+    <update id="updateBrand">
+        UPDATE tb_brand SET
+        name=#{name},image=#{image},letter=#{letter},update_time=#{updateTime} WHERE id=#{id}
+    </update>
+
+    <select id="queryBrandByCategoryId" resultType="com.leyou.item.entity.Brand">
+        SELECT * FROM tb_category_brand tcb
+        INNER JOIN tb_brand tb ON tcb.brand_id=tb.id AND tcb.category_id=#{cid}
+    </select>
+
+</mapper>

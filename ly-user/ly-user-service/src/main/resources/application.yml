@@ -1,0 +1,46 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: user-service
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/heima86?characterEncoding=utf-8
+    username: root
+    password: root
+  rabbitmq:
+    host: 192.168.11.129
+    username: leyou
+    password: leyou
+    virtual-host: /leyou
+  redis:
+    host: 192.168.11.129
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:10086/eureka
+  instance:
+    ip-address: 127.0.0.1
+    prefer-ip-address: true
+
+mybatis:
+  type-aliases-package: com.leyou.user.entity
+  configuration:
+    map-underscore-to-camel-case: true
+logging:
+  level:
+    com.leyou: debug
+
+ly:
+  encoder:
+    crypt:
+      secret: ${random.uuid}     # 使用uuid生成随机的密匙
+      strength: 10            # 加密强度4~31，决定了密码和盐加密时的运算次数，超过10以后加密耗时会显著增加
+  jwt:
+    pubKeyPath: D:\学习使我快乐\IO流文件\publicFile.pub  # 公钥地址
+    app:
+      id: 1                    # 本服务的id
+      secret: ${spring.application.name} # 本服务的密钥，默认也是服务名称
+      headerName: root
+
+
